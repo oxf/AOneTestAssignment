@@ -1,4 +1,4 @@
-package com.stanislav.aonetestassignment
+package com.stanislav.aonetestassignment.models
 
 data class Standing(
      val stage: String,

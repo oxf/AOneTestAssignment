@@ -1,4 +1,4 @@
-package com.stanislav.aonetestassignment
+package com.stanislav.aonetestassignment.models
 
 class Area(
         val id: Long,

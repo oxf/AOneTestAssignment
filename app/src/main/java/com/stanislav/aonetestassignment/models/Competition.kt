@@ -1,4 +1,6 @@
-package com.stanislav.aonetestassignment
+package com.stanislav.aonetestassignment.models
+
+import com.stanislav.aonetestassignment.models.Area
 
 data class Competition(
         val id: Long,

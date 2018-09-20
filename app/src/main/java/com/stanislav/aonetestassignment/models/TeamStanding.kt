@@ -1,10 +1,10 @@
-package com.stanislav.aonetestassignment
+package com.stanislav.aonetestassignment.models
 
-import java.text.FieldPosition
+import com.stanislav.aonetestassignment.models.TeamBasic
 
 data class TeamStanding(
         val position: Int,
-        val team: Team,
+        val team: TeamBasic,
         val playedGames: Int,
         val won: Int,
         val draw: Int,

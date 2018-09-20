@@ -1,4 +1,4 @@
-package com.stanislav.aonetestassignment
+package com.stanislav.aonetestassignment.models
 
 data class Season(
         val id: Long,
