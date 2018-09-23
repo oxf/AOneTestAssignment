@@ -1,28 +1,37 @@
 package com.stanislav.aonetestassignment.fragments
 
 
-import android.app.Application
-import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.stanislav.aonetestassignment.R
-import com.stanislav.aonetestassignment.viewmodels.CompetitionViewModel
-import com.stanislav.aonetestassignment.viewmodels.CompetitionViewModelFactory
+import com.stanislav.aonetestassignment.databinding.FragmentStandingsBinding
+import com.stanislav.aonetestassignment.viewmodels.StandingsViewModel
 
 class StandingsFragment : Fragment() {
 
-    private lateinit var liveData: CompetitionViewModel
+    private lateinit var binding: FragmentStandingsBinding
+    private lateinit var viewModel: StandingsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_standings, container, false)
-        val competitionId = arguments?.get(ARG_AREA) as Long
-        liveData = ViewModelProviders.of(this, CompetitionViewModelFactory(Application(), competitionId)).get(CompetitionViewModel::class.java)
-        return view
+        binding = DataBindingUtil.inflate<FragmentStandingsBinding>(inflater, R.layout.fragment_standings, container, false)
+//       val view = binding.root
+//        val vm = binding.viewModel
+        // val view = inflater.inflate(R.layout.fragment_standings, container, false)
+//        val competitionId = arguments?.get(ARG_AREA) as Long
+//        binding = DataBindingUtil.setContentView(this.activity!!.parent, R.layout.fragment_standings)
+//        binding.postList.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+//
+//        viewModel = ViewModelProviders.of(this).get(StandingsViewModel::class.java)
+//        binding.viewModel = viewModel
+//        return view
+        // return null
+        return binding.root
     }
 
     companion object {

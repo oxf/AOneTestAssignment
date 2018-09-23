@@ -21,7 +21,11 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
     override fun getPageTitle(position: Int): CharSequence? = Feeds.values()[position].name
 
     enum class Feeds(val competitionId: Long) {
-        ENGLAND(2021), SPAIN(2014), GERMANY(2002), ITALY(2019), FRANCE(2015)
+        ENGLAND(2021),
+        SPAIN(2014),
+        GERMANY(2002),
+        ITALY(2019),
+        FRANCE(2015)
     }
 
 }

@@ -17,6 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="footballDataApiKey"
+            android:value="78c992b4f65c4545b64af8540b937598" />
     </application>
 
 </manifest>
