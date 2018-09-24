@@ -5,9 +5,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+
 
 /**
  * Module which provides all required dependencies about network
@@ -36,9 +39,20 @@ object NetworkModule {
     @Reusable
     @JvmStatic
     internal fun provideRetrofitInterface(): Retrofit {
+        val logging = HttpLoggingInterceptor()
+// set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+        val httpClient = OkHttpClient.Builder()
+// add your other interceptors …
+
+// add logging as last interceptor
+        httpClient.addInterceptor(logging)  // <-- this is the important line!
+
         return Retrofit.Builder()
                 .baseUrl("http://api.football-data.org/")
                 .addConverterFactory(MoshiConverterFactory.create())
+                .client(httpClient.build())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build()
     }

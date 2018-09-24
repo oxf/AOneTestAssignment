@@ -2,13 +2,16 @@ package com.stanislav.aonetestassignment.viewmodels
 
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
+import com.stanislav.aonetestassignment.R
+import com.stanislav.aonetestassignment.adapters.StandingsRecyclerViewAdapter
+import com.stanislav.aonetestassignment.models.StandingsRes
 import com.stanislav.aonetestassignment.services.FootballDataService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class StandingsViewModel : BasicViewModel() {
+class StandingsViewModel(val competitionId: Long) : BasicViewModel() {
     @Inject
     lateinit var footballDataService: FootballDataService
 
@@ -16,19 +19,24 @@ class StandingsViewModel : BasicViewModel() {
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
+    val errorMessage: MutableLiveData<Int> = MutableLiveData()
+    val errorClickListener = View.OnClickListener { loadStandings() }
+
+    val standingsRecyclerViewAdapter: StandingsRecyclerViewAdapter = StandingsRecyclerViewAdapter()
+
     init {
         loadStandings()
     }
 
     private fun loadStandings() {
-        subscription = footballDataService.listStandingsForLeague("asdf", 2002)
+        subscription = footballDataService.listStandingsForLeague("78c992b4f65c4545b64af8540b937598", competitionId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { onRetrieveStandingsStart() }
-//                .doOnTerminate { onRetrieveStandingsFinish() }
+                .doOnTerminate { onRetrieveStandingsFinish() }
                 .subscribe(
-                        { onRetrieveStandingsSuccess() },
-                        { onRetrieveStandingsError() }
+                        { result -> onRetrieveStandingsSuccess(result) },
+                        { error -> onRetrieveStandingsError(error) }
                 )
     }
 
@@ -40,18 +48,20 @@ class StandingsViewModel : BasicViewModel() {
 
     private fun onRetrieveStandingsStart() {
         loadingVisibility.value = View.VISIBLE
+        errorMessage.value = null
     }
 
     private fun onRetrieveStandingsFinish() {
         loadingVisibility.value = View.GONE
     }
 
-    private fun onRetrieveStandingsSuccess() {
-
+    private fun onRetrieveStandingsSuccess(result: StandingsRes) {
+        standingsRecyclerViewAdapter.updatePostList(result.standings[0].table)
     }
 
-    private fun onRetrieveStandingsError() {
-
+    private fun onRetrieveStandingsError(error: Throwable) {
+        error.printStackTrace()
+        errorMessage.value = R.string.errorRetrievingStandings
     }
 
 }
