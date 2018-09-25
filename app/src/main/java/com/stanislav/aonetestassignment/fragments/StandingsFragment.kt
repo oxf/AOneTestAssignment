@@ -30,7 +30,7 @@ class StandingsFragment : Fragment() {
 
         binding = DataBindingUtil.inflate<FragmentStandingsBinding>(inflater, R.layout.fragment_standings, container, false)
         binding.postList.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        val factory = CompetitionViewModelFactory(competitionId)
+        val factory = CompetitionViewModelFactory(competitionId, this.context!!)
 
         viewModel = factory.create(StandingsViewModel::class.java)
         viewModel.errorMessage.observe(this, Observer { errorMessage ->

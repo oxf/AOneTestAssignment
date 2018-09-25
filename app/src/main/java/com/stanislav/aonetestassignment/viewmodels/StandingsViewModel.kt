@@ -1,6 +1,7 @@
 package com.stanislav.aonetestassignment.viewmodels
 
 import android.arch.lifecycle.MutableLiveData
+import android.content.Context
 import android.view.View
 import com.stanislav.aonetestassignment.R
 import com.stanislav.aonetestassignment.adapters.StandingsRecyclerViewAdapter
@@ -11,7 +12,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class StandingsViewModel(val competitionId: Long) : BasicViewModel() {
+class StandingsViewModel(val competitionId: Long, private val context: Context) : BasicViewModel() {
     @Inject
     lateinit var footballDataService: FootballDataService
 
@@ -22,7 +23,7 @@ class StandingsViewModel(val competitionId: Long) : BasicViewModel() {
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadStandings() }
 
-    val standingsRecyclerViewAdapter: StandingsRecyclerViewAdapter = StandingsRecyclerViewAdapter()
+    val standingsRecyclerViewAdapter: StandingsRecyclerViewAdapter = StandingsRecyclerViewAdapter(context)
 
     init {
         loadStandings()
